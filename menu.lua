@@ -1,11 +1,14 @@
 gamestate = require('hump.gamestate')
 vector = require('hump.vector')
+server = require('server')
+game = require('game')
 
 menu = {}
 
 --define some important variables
 width, height = love.graphics.getDimensions()
 float = 0
+ip = ''
 
 debounce = {}
 
@@ -22,9 +25,12 @@ end
 
 local function play()
   print('starting game...')
+  game.host = ip
+  gamestate.switch(game)
 end
 local function host()
-  require('server').listen()
+  ip = 'localhost'
+  if not server.server then server.listen() end
 end
 
 buttons = {
@@ -33,7 +39,7 @@ buttons = {
 }
 
 function menu:enter()
-
+  print('entering menu...')
 end
 function menu:update(dt)
   float = float + dt
@@ -64,6 +70,20 @@ function menu:draw()
 
     y = y + math.sin(float) * 10
     love.graphics.draw(button[1], x, y)
+
+    --textbox
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle('fill',.1*width,.1*height,.8*width,.1*height)
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print('Host to connect to: ['..ip..']', .1*width,.1*height)
+  end
+end
+function menu:textinput(char)
+  ip = ip..char
+end
+function menu:keypressed(key)
+  if key == 'backspace' then
+    ip = string.sub(ip,1, string.len(ip) - 1)
   end
 end
 

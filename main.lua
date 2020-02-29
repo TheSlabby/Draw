@@ -3,6 +3,7 @@ sock = require('sock')
 server = require('server')
 --gamestates
 menu = require('menu')
+game = require('game')
 
 function love.load()
   print('Draw loading...')
