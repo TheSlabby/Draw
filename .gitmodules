@@ -1,0 +1,6 @@
+[submodule "hump"]
+	path = hump
+	url = https://github.com/vrld/hump.git
+[submodule "sock.lua"]
+	path = sock.lua
+	url = https://github.com/camchenry/sock.lua.git
